@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import to from 'await-to-js';
@@ -9,7 +9,6 @@ const prisma = new PrismaClient();
 @Injectable()
 export class ProductService {
   async create(createProductDto: CreateProductDto) {
-    console.log(createProductDto);
     const [error, product] = await to(
       prisma.product.create({
         data: createProductDto,
@@ -20,19 +19,52 @@ export class ProductService {
     return product;
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    const [error, products] = await to(prisma.product.findMany());
+    if (error) throw error;
+
+    return products;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: number) {
+    const [error, product] = await to(
+      prisma.product.findUnique({
+        where: { id },
+      }),
+    );
+
+    if (error) throw error;
+    if (!product)
+      return new NotFoundException({ message: 'Product not found' });
+
+    return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const [error, product] = await to(
+      prisma.product.update({
+        where: { id },
+        data: updateProductDto,
+      }),
+    );
+
+    if (error) throw error;
+    if (!product)
+      return new NotFoundException({ message: 'Product not found' });
+
+    return product;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    const [error, product] = await to(
+      prisma.product.delete({
+        where: { id },
+      }),
+    );
+    if (error) throw error;
+    if (!product)
+      return new NotFoundException({ message: 'Product not found' });
+
+    return product;
   }
 }
