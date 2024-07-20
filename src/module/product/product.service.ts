@@ -10,8 +10,11 @@ const prisma = new PrismaClient();
 export class ProductService {
   async create(createProductDto: CreateProductDto) {
     console.log(createProductDto);
-    const [error, product] = await to(prisma.product.create(createProductDto));
-
+    const [error, product] = await to(
+      prisma.product.create({
+        data: createProductDto,
+      }),
+    );
     if (error) throw error;
 
     return product;

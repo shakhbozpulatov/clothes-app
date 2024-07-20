@@ -22,4 +22,7 @@ export class CreateProductDto {
 
   @IsDate()
   createdAt: Date;
+
+  @IsDate()
+  updatedAt: Date;
 }
