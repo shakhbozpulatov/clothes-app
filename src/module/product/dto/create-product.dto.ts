@@ -1,4 +1,11 @@
-import { IsArray, IsDate, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -9,6 +16,9 @@ export class CreateProductDto {
 
   @IsArray()
   image: string[];
+
+  @IsNumber()
+  price: number;
 
   @IsEnum(['INACTIVE', 'ACTIVE'])
   status: 'INACTIVE' | 'ACTIVE';

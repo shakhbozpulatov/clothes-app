@@ -9,7 +9,7 @@ CREATE TABLE "Product" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
+    "image" TEXT[],
     "status" "Statuses" NOT NULL DEFAULT 'INACTIVE',
     "gender" "Gender" NOT NULL DEFAULT 'MALE',
     "brand" TEXT NOT NULL,

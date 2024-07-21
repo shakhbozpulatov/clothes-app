@@ -29,6 +29,7 @@ model Product {
   name        String
   description String
   image       String[]
+  price       Float    @default(0)
   status      Statuses @default(INACTIVE)
   gender      Gender   @default(MALE)
   brand       String

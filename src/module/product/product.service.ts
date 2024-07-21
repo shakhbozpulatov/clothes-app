@@ -15,7 +15,6 @@ export class ProductService {
       }),
     );
 
-    console.log(error);
     if (error) throw error;
 
     return product;
@@ -64,6 +63,23 @@ export class ProductService {
       }),
     );
     if (error) throw error;
+    if (!product)
+      return new NotFoundException({ message: 'Product not found' });
+
+    return product;
+  }
+
+  async status(id: number) {
+    const [error, product] = await to(
+      prisma.product.update({
+        where: { id },
+        data: {
+          status: 'ACTIVE',
+        },
+      }),
+    );
+    if (error) throw error;
+
     if (!product)
       return new NotFoundException({ message: 'Product not found' });
 

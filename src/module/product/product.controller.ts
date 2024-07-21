@@ -39,4 +39,9 @@ export class ProductController {
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
   }
+
+  @Post('status/:id')
+  status(@Param('id') id: string) {
+    return this.productService.status(+id);
+  }
 }
