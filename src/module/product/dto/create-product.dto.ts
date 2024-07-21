@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -6,6 +6,9 @@ export class CreateProductDto {
 
   @IsString()
   description: string;
+
+  @IsArray()
+  image: string[];
 
   @IsEnum(['INACTIVE', 'ACTIVE'])
   status: 'INACTIVE' | 'ACTIVE';

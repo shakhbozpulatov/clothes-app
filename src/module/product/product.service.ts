@@ -14,6 +14,8 @@ export class ProductService {
         data: createProductDto,
       }),
     );
+
+    console.log(error);
     if (error) throw error;
 
     return product;
