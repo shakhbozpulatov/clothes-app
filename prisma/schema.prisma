@@ -24,6 +24,14 @@ enum Gender {
   UNISEX
 }
 
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
@@ -36,7 +44,7 @@ model Product {
   size        String?
   likes       Int      @default(0)
   color       String[]
-  madeIn      String   @map("made_in")
+  madeIn      String?  @map("made_in")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt
 }
