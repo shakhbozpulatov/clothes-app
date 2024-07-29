@@ -3,6 +3,12 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import to from 'await-to-js';
 import { PrismaClient } from '@prisma/client';
+import { Features } from './utils/features';
+import { FilterProductInput } from './dto/filter.product';
+
+type GetProductsProps = {
+  status: string;
+};
 
 const prisma = new PrismaClient();
 
@@ -84,5 +90,13 @@ export class ProductService {
       return new NotFoundException({ message: 'Product not found' });
 
     return product;
+  }
+
+  async getProducts(data: GetProductsProps) {
+    //Execute the query
+    // console.log(await prisma.product.findMany());
+    return new Features({
+      status: data.status,
+    }).filter();
   }
 }

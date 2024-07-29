@@ -34,6 +34,9 @@ model Product {
   gender      Gender   @default(MALE)
   brand       String
   size        String?
+  likes       Int      @default(0)
+  color       String[]
+  madeIn      String   @map("made_in")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt
 }

@@ -1,0 +1,71 @@
+import { PrismaClient } from '@prisma/client';
+import { STATUSES } from '../../../constants';
+
+const prisma = new PrismaClient();
+
+export class Features {
+  constructor(public queryString: any) {}
+
+  async filter() {
+    try {
+      if (
+        STATUSES.includes(this.queryString.status.toUpperCase()) &&
+        this.queryString.status
+      ) {
+        return await prisma.product.findMany({
+          where: {
+            status: this.queryString.status.toUpperCase(),
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // sorting() {
+  //   if (this.queryString.sort) {
+  //     const sortBy = this.queryString.sort.split(',').join(' ');
+  //     this.prismaQuery = this.prismaQuery.sort(sortBy);
+  //   } else {
+  //     this.prismaQuery = this.prismaQuery.sort('-created');
+  //   }
+  //
+  //   return this;
+  // }
+
+  // pagination() {
+  //   // get the page and convert it to a number. If no page set default to 1
+  //   const page = this.queryString.page || 1;
+  //
+  //   // get limit and if no limit, set limit to 50
+  //   const limit = this.queryString.limit || 50;
+  //
+  //   // calculate skip value
+  //   const skip = (page - 1) * limit;
+  //
+  //   // chain it to the mongoose query.
+  //   this.prismaQuery = this.prismaQuery({
+  //     skip: skip,
+  //     take: limit,
+  //   });
+  //
+  //   // return the object
+  //   return this;
+  // }
+  //
+  //
+
+  //
+  // limit() {
+  //   if (this.queryString.fields) {
+  //     const fields = this.queryString.fields.split(',').join(' ');
+  //
+  //     this.prismaQuery = this.prismaQuery.select(fields);
+  //   } else {
+  //     this.prismaQuery = this.prismaQuery.select('-__v');
+  //   }
+  //
+  //   return this;
+  // }
+}

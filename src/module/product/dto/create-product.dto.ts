@@ -30,6 +30,12 @@ export class CreateProductDto {
   brand: string;
 
   @IsString()
+  madeIn: string;
+
+  @IsString()
+  color: string[];
+
+  @IsString()
   @IsOptional()
   size: string;
 
