@@ -94,8 +94,11 @@ export class ProductService {
   async getProducts(data: GetProductsProps) {
     //Execute the query
     // console.log(await prisma.product.findMany());
-    return new Features({
-      status: data.status,
-    }).filter();
+    return new Features(
+      {
+        status: data.status,
+      },
+      'product',
+    ).filter();
   }
 }

@@ -4,7 +4,10 @@ import { STATUSES } from '../constants';
 const prisma = new PrismaClient();
 
 export class Features {
-  constructor(public queryString: any) {}
+  constructor(
+    public queryString: any,
+    public collectionName: string,
+  ) {}
 
   async filter() {
     try {
@@ -12,7 +15,7 @@ export class Features {
         this.queryString.status &&
         STATUSES.includes(this.queryString.status.toUpperCase())
       ) {
-        return await prisma.product.findMany({
+        return await prisma[this.collectionName].findMany({
           where: {
             status: this.queryString.status.toUpperCase(),
           },
