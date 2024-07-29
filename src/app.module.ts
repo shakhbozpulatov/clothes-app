@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { ProductModule } from './module/product/product.module';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './app.error-handling';
-import { CategoryModule } from './category/category.module';
 import { CategoryModule } from './module/category/category.module';
 
 @Module({

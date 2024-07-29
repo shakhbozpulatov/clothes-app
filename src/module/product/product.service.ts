@@ -3,8 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import to from 'await-to-js';
 import { PrismaClient } from '@prisma/client';
-import { Features } from './utils/features';
-import { FilterProductInput } from './dto/filter.product';
+import { Features } from '../../utils/features';
 
 type GetProductsProps = {
   status: string;

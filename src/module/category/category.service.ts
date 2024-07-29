@@ -1,26 +1,88 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import to from 'await-to-js';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  async create(createCategoryDto: CreateCategoryDto) {
+    const [error, category] = await to(
+      prisma.category.create({
+        data: createCategoryDto,
+      }),
+    );
+
+    if (error) throw error;
+
+    return category;
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll() {
+    const [error, category] = await to(
+      prisma.category.findMany({
+        include: {
+          Product: {
+            where: {
+              status: 'ACTIVE',
+            },
+          },
+        },
+      }),
+    );
+    if (error) throw error;
+
+    return category;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number) {
+    const [error, category] = await to(
+      prisma.category.findUnique({
+        where: { id },
+        include: {
+          Product: {
+            where: {
+              status: 'ACTIVE',
+            },
+          },
+        },
+      }),
+    );
+
+    if (error) throw error;
+    if (!category)
+      return new NotFoundException({ message: 'Category not found' });
+
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    const [error, category] = await to(
+      prisma.category.update({
+        where: { id },
+        data: updateCategoryDto,
+      }),
+    );
+
+    if (error) throw error;
+    if (!category)
+      return new NotFoundException({ message: 'Category not found' });
+
+    return category;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+    const [error, category] = await to(
+      prisma.category.delete({
+        where: { id },
+      }),
+    );
+    if (error) throw error;
+    if (!category)
+      return new NotFoundException({ message: 'Category not found' });
+
+    return category;
   }
 }

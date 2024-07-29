@@ -44,4 +44,7 @@ export class CreateProductDto {
 
   @IsDate()
   updatedAt: Date;
+
+  @IsNumber()
+  categoryId: number;
 }

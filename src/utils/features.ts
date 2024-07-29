@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { STATUSES } from '../../../constants';
+import { STATUSES } from '../constants';
 
 const prisma = new PrismaClient();
 
@@ -9,14 +9,16 @@ export class Features {
   async filter() {
     try {
       if (
-        STATUSES.includes(this.queryString.status.toUpperCase()) &&
-        this.queryString.status
+        this.queryString.status &&
+        STATUSES.includes(this.queryString.status.toUpperCase())
       ) {
         return await prisma.product.findMany({
           where: {
             status: this.queryString.status.toUpperCase(),
           },
         });
+      } else {
+        return await prisma.product.findMany({});
       }
     } catch (error) {
       console.log(error);
