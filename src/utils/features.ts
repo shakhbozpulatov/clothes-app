@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { STATUSES } from '../constants';
+import { STATUSES_PRODUCT } from '../constants';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,7 @@ export class Features {
     try {
       if (
         this.queryString.status &&
-        STATUSES.includes(this.queryString.status.toUpperCase())
+        STATUSES_PRODUCT.includes(this.queryString.status.toUpperCase())
       ) {
         return await prisma[this.collectionName].findMany({
           where: {
